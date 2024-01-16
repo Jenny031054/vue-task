@@ -46,7 +46,7 @@ createApp({
     mounted(){
         // 存下token，下次不用重新登入也可以娶的資料
 
-        const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
+        const token = document.cookie.replace(/(?:(?:^|.*;\s*)myToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
         // 預設行為存在headers
         axios.defaults.headers.common.Authorization = token;
         this.checkAdmin();
