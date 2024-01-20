@@ -21,7 +21,7 @@ createApp({
                 this.getProducts()
             })
             .catch((err)=>{
-                console.log(err)
+                alert(err.response.data.message)
             })
         },
         getProducts(){
@@ -31,7 +31,7 @@ createApp({
                 this.products = res.data.products;
             })
             .catch((err)=>{
-                console.log(err)
+                alert(err.response.data.message)
             })
         },
         showProduct(item){

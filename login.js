@@ -29,7 +29,9 @@ createApp({
                 window.location = 'products.html';
             })
             .catch((error)=>{
-                console.log(error.response.data.message)
+                alert(error.response.data.message);
+                this.user.username="";
+                this.user.password=""
             })
         }, 
     }

@@ -44,7 +44,7 @@ createApp({
                
             })
             .catch((err)=>{
-                console.log(err)
+                alert(err.response.data.message)
             })
         },
         openModal(status,item){
@@ -77,7 +77,7 @@ createApp({
             this.products = res.data.products;
           })
           .catch((err)=>{
-            console.log(err.data)
+            alert(err.response.data.message)
           })
         },
         // 叫做更新圖片，因為不只有加入的行為，還會有編輯商品資料的行為
@@ -100,7 +100,7 @@ createApp({
                 this.getData()
             })
             .catch((err)=>{
-                console.log(err)
+                alert(err.response.data.message)
             })
         },
         delProduct(){
@@ -114,8 +114,7 @@ createApp({
 
             })
             .catch((err)=>{
-                console.log(err);
-               
+                alert(err.response.data.message)
             })
         },
         createImg(){
