@@ -26,7 +26,7 @@ createApp({
                 console.log(token,expired);
                 //存到瀏覽器的cookie
                 document.cookie = `myToken=${token};expires=${new Date(expired)} ;path=/`;
-                window.location = 'products.html';
+                window.location = 'admin.html';
             })
             .catch((error)=>{
                 alert(error.response.data.message);
