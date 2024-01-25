@@ -68,7 +68,7 @@ const app = createApp({
           let url = `${apiUrl}/api/${apiPath}/admin/products?page=${page}`;
           axios.get(url)
           .then((res)=>{
-            const { products,pagination } = res.data
+            const { products , pagination } = res.data
             this.products = products;
             this.pagination = pagination;
 
@@ -83,7 +83,7 @@ const app = createApp({
 
 });
 // 商品新增&編輯元件
-app.component('newProductModal',{
+app.component('productModal',{
   // 這邊的props product是為了編輯狀態需要從外部帶入原本的資料用
   // isNew 是從使用者點擊開啟時就會帶進來的參數，因為是從外部船內部需要props，用來判斷這個modal要怎麼後續操作
     props:["product","isNew"],
@@ -102,17 +102,18 @@ app.component('newProductModal',{
     },
     methods: {
       updateProduct(){
+       
             // 用let 因為下面還要判斷這次的狀況是要新增還是修改，
             let url = `${apiUrl}/api/${apiPath}/admin/product`;
             let http = "post";
             // 判斷是否為新增商品，就要改網址路徑和http狀態
             if(this.isNew === false){
                 //而且編輯確認按鈕要帶上產品id
-                url= `${apiUrl}/api/${apiPath}/admin/product/${this.productTemp.id}` ;
+                url= `${apiUrl}/api/${apiPath}/admin/product/${this.product.id}` ;
                 http = "put"
             };
             // 判斷完就可以發請求，因為axios是個物件，用.post、.put發送請求涵式，也可以用括弧記法[]
-            axios[http](url,{ data: this.productTemp } )
+            axios[http](url,{ data: this.product } )
             .then((res)=>{
                 alert(res.data.message);
                 // 關閉modal後取得資料並且渲染到畫面上
@@ -122,15 +123,15 @@ app.component('newProductModal',{
                 this.$emit('updateData');
             })
             .catch((err)=>{
-                alert(err.response.data.message)
+                console.log(err)
             })
       },
       showModal(){
-          productModal.show();
+        productModal.show();
       },
 
       hideModal(){
-          productModal.hide();
+        productModal.hide();
       },
       createImages() {
         this.product.imagesUrl = [];
@@ -172,8 +173,8 @@ app.component('newProductModal',{
                         <!-- 這邊是處理多圖新增，因為要存的方式是陣列，所以 -->
                         <div class="mb-1" v-for="(image,key) in product.imagesUrl" :key="key">
                           <div class="mb-3">
-                            <label :for="" class="form-label">輸入圖片網址</label>
-                            <input :id="" 
+                            <label :for="key" class="form-label">輸入圖片網址</label>
+                            <input :id="key" 
                              v-model="product.imagesUrl[key]"
                              type="text" class="form-control" 
                              placeholder="請輸入圖片連結">
@@ -197,7 +198,7 @@ app.component('newProductModal',{
                         </div>
                     </div>
                     <div v-else>
-                        <button class="btn btn-outline-primary btn-sm d-block w-100" @click="createImg">
+                        <button class="btn btn-outline-primary btn-sm d-block w-100" @click="createImages">
                           新增圖片
                         </button>
                     </div>
@@ -263,7 +264,7 @@ app.component('newProductModal',{
               <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                 取消
               </button>
-            <--! 下面的@click事件要放methods所定義的名稱  -->
+            
               <button @click="updateProduct" type="button" class="btn btn-primary">
                 確認
               </button>
@@ -354,8 +355,7 @@ app.component('pagination',{
     `
       <nav aria-label="Page navigation example">
         <ul class="pagination">
-        /*上一頁 */
-        /*如果當前是第一頁就要禁用回到上一頁的按鈕 */
+        
           <li
             class="page-item"
             :class="{'disabled': pages.current_page === 1}"
@@ -369,11 +369,9 @@ app.component('pagination',{
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          /*當前頁 用v-for去遍歷出全部頁數，這邊的item就是123頁碼*/
-          /*當前頁數要有active樣式 */
-          /*按下去的時候要觸發getProducts的函式，並且直接帶入網址參數的值 */
+          
           <li
-            v-for="(item, index) in pagination.total_pages"
+            v-for="(item, index) in pages.total_pages"
             :key="index"
             class="page-item"
             :class="{'active': item === pages.current_page}"
@@ -391,7 +389,7 @@ app.component('pagination',{
             aria-label="Next"
             @click.prevent="emitPages(pages.current_page +1)"
           >
-            <span aria-hidden="true">&laquo;</span>
+            <span aria-hidden="true">&raquo;</span>
           </a>
           </li>
         </ul>
