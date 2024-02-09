@@ -2,3 +2,17 @@
 當前頁數要有active樣式 
 按下去的時候要觸發getProducts的函式，並且直接帶入網址參數的值 
 <--! 下面的@click事件要放methods所定義的名稱  -->
+
+# week 5
+- 建立環境
+- 串接上產品的API( 確認API的串接方式是否需要token : 加上cookie )
+v-for="cart in carts " :key"
+- 將API的data賦予到我們的自訂變數上
+- 用Date渲染商品畫面
+- 加入購物車按鈕post資料(內外都要) 2/7 Done
+- 串接上購物車的API 2/8
+- 用購物車的API Date渲染商品畫面
+- 刪除購物車
+- put 修改購物車數量
+- 使用 loading 套件製作 loading 效果
+- 使用 VeeValidate 套件完成表單驗證功能，操作文件（無ESM 版本）
